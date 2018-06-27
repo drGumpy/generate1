@@ -5,13 +5,14 @@ import certyficate.dataContainer.DataProbe;
 public class CalculateRh extends CalculateT {
 	protected double[] findCorection() {
 		double[] correction = super.findCorection();
+		correction[0] = calculateHuminidityCorretion(0);
 		return correction;
 	}	
 	
 	protected void getFactors() {
 		super.getFactors();
 		int minHuminidity = pointsInRange[0].valueRh;
-    	int maxHuminidity = pointsInRange[2].valueRh;
+    	int maxHuminidity = pointsInRange[point.length].valueRh;
 		factor[1]= getFactor((double)point[1], minHuminidity, maxHuminidity);;
 	}
     

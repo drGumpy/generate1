@@ -30,8 +30,7 @@ public class CalculateT {
 	}
 
 	private void estimateCorection(DataProbe data) {
-		double[] correction;
-		correction = findCorection();
+		double[] correction = findCorection();
 		data.correctionT = correction[0];
 		data.correctionRh = correction[1];
 	}
