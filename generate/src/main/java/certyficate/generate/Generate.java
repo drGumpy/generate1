@@ -197,7 +197,7 @@ public class Generate {
                     sheet.setValueAt(type.device.resolutionRh, 4 , line+13);
                 for(int j=0; j<10; j++){
                 //    System.out.println(patern.time[i]);
-                    sheet.setValueAt(MetrologyMath.time(patern.time[i], j), 0 , line+17+j);
+                    sheet.setValueAt(DataCalculation.time(patern.time[i], j), 0 , line+17+j);
                     sheet.setValueAt(patern.dataT[i][j], 1 , line+17+j);
                     sheet.setValueAt(device.dataT[i][j], 3 , line+17+j);
                     if(Rh){
@@ -230,18 +230,18 @@ public class Generate {
                 for(int j=0; j<uncT.length; j++){
                     sheet.setValueAt(uncT[j], 13, line+5+j);
                 }
-                double unc =MetrologyMath.uncertainty(uncT);
-                double round = MetrologyMath.findRound(2*unc, Double.parseDouble(type.device.resolutionT));
+                double unc =DataCalculation.uncertainty(uncT);
+                double round = DataCalculation.findRound(2*unc, Double.parseDouble(type.device.resolutionT));
                 if(Rh){
                     if(round<0.1)
                         round=0.1;
                 }
-                double pt=MetrologyMath.round_d(patern.averageT[i]+dataProbe[i].correctionT,round);
-                double div =MetrologyMath.round_d(device.averageT[i],round);
-                val.probeT= MetrologyMath.round(pt,round).replace(".", ",");
-                val.deviceT = MetrologyMath.round(div,round).replace(".", ",");
-                val.errorT = MetrologyMath.round(div-pt,round).replace(".", ",");
-                val.uncertaintyT = MetrologyMath.round(2*unc,round).replace(".", ",");
+                double pt=DataCalculation.round_d(patern.averageT[i]+dataProbe[i].correctionT,round);
+                double div =DataCalculation.round_d(device.averageT[i],round);
+                val.probeT= DataCalculation.round(pt,round).replace(".", ",");
+                val.deviceT = DataCalculation.round(div,round).replace(".", ",");
+                val.errorT = DataCalculation.round(div-pt,round).replace(".", ",");
+                val.uncertaintyT = DataCalculation.round(2*unc,round).replace(".", ",");
                 
                 if(Rh){
                     sheet.setValueAt(val.probeT, 5, line+14);
@@ -276,14 +276,14 @@ public class Generate {
                         val.errorRh = "-";
                         val.uncertaintyRh = "-";
                     }else{
-                    unc =MetrologyMath.uncertainty(uncRh);
-                    round = MetrologyMath.findRound(2*unc, Double.parseDouble(type.device.resolutionRh));
-                    pt=MetrologyMath.round_d(patern.averageRh[i]+dataProbe[i].correctionRh,round);
-                    div =MetrologyMath.round_d(device.averageRh[i],round);
-                        val.probeRh= MetrologyMath.round(pt,round).replace(".", ",");
-                        val.deviceRh = MetrologyMath.round(div,round).replace(".", ",");
-                        val.errorRh = MetrologyMath.round(div-pt,round).replace(".", ",");
-                        val.uncertaintyRh = MetrologyMath.round(2*unc,round).replace(".", ",");
+                    unc =DataCalculation.uncertainty(uncRh);
+                    round = DataCalculation.findRound(2*unc, Double.parseDouble(type.device.resolutionRh));
+                    pt=DataCalculation.round_d(patern.averageRh[i]+dataProbe[i].correctionRh,round);
+                    div =DataCalculation.round_d(device.averageRh[i],round);
+                        val.probeRh= DataCalculation.round(pt,round).replace(".", ",");
+                        val.deviceRh = DataCalculation.round(div,round).replace(".", ",");
+                        val.errorRh = DataCalculation.round(div-pt,round).replace(".", ",");
+                        val.uncertaintyRh = DataCalculation.round(2*unc,round).replace(".", ",");
                     }
                     sheet.setValueAt(val.probeRh, 5, line+14);
                     sheet.setValueAt(val.deviceRh, 7, line+14);

@@ -2,12 +2,17 @@ package certyficate.calculation;
 
 import certyficate.dataContainer.DataProbe;
 
-public class CalculateRh extends Calculate {
-
-	public DataProbe findPoint(DataProbe[] pointsInRange, int[] point) {
-		
-		DataProbe data = null;
-		return data;
+public class CalculateRh extends CalculateT {
+	protected double[] findCorection() {
+		double[] correction = super.findCorection();
+		return correction;
+	}	
+	
+	protected void getFactors() {
+		super.getFactors();
+		int minHuminidity = pointsInRange[0].valueRh;
+    	int maxHuminidity = pointsInRange[2].valueRh;
+		factor[1]= getFactor((double)point[1], minHuminidity, maxHuminidity);;
 	}
     
     //Przeszukiwanie zakresów pomiarowych
@@ -18,9 +23,9 @@ public class CalculateRh extends Calculate {
         double correctionRh = (rh-range[2])/(range[3]-range[2]);
         sol.valueRh=rh;
         sol.valueT=t;
-        sol.correctionRh = MetrologyMath.calculate(correctionT, correctionRh, d1.correctionRh, d2.correctionRh,
+        sol.correctionRh = DataCalculation.calculate(correctionT, correctionRh, d1.correctionRh, d2.correctionRh,
                 d3.correctionRh, d4.correctionRh);
-        sol.correctionT = MetrologyMath.calculate(correctionT, correctionRh, d1.correctionT, d2.correctionT,
+        sol.correctionT = DataCalculation.calculate(correctionT, correctionRh, d1.correctionT, d2.correctionT,
                 d3.correctionT, d4.correctionT);
         sol.driftRh = driftRh;
         sol.driftT = driftT;
@@ -49,7 +54,7 @@ public class CalculateRh extends Calculate {
             if(b==2) break;
         }
         double cor= (t-t1)/(t2-t1);
-        return MetrologyMath.easyCalculate(cor, d1, d2);
+        return DataCalculation.easyCalculate(cor, d1, d2);
     }
     
   //wyznaczanie wartości poprawek
@@ -70,7 +75,7 @@ public class CalculateRh extends Calculate {
             if(b==2) break;
         }
         double cor= (rh-rh1)/(rh2-rh1);
-        return MetrologyMath.easyCalculate(cor, d1, d2);
+        return DataCalculation.easyCalculate(cor, d1, d2);
     }
 
 	

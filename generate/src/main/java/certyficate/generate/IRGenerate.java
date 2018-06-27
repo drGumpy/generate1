@@ -129,15 +129,15 @@ public class IRGenerate {
                 for(int j=0; j<uncT.length; j++){
                     sheet.setValueAt(uncT[j], 13, line+5+j);
                 }
-                double unc =MetrologyMath.uncertainty(uncT);
-                double round = MetrologyMath.findRound(2*unc, Double.parseDouble(type.device.resolutionT));
-                double pt=MetrologyMath.round_d(type.pyrometr.reference[count]+
+                double unc =DataCalculation.uncertainty(uncT);
+                double round = DataCalculation.findRound(2*unc, Double.parseDouble(type.device.resolutionT));
+                double pt=DataCalculation.round_d(type.pyrometr.reference[count]+
                 		dataProbe[i].correctionT,round);
-                double div =MetrologyMath.round_d(device.averageT[i],round);
-                val.probeT= MetrologyMath.round(pt,round).replace(".", ",");
-                val.deviceT = MetrologyMath.round(div,round).replace(".", ",");
-                val.errorT = MetrologyMath.round(div-pt,round).replace(".", ",");
-                val.uncertaintyT = MetrologyMath.round(2*unc,round).replace(".", ",");
+                double div =DataCalculation.round_d(device.averageT[i],round);
+                val.probeT= DataCalculation.round(pt,round).replace(".", ",");
+                val.deviceT = DataCalculation.round(div,round).replace(".", ",");
+                val.errorT = DataCalculation.round(div-pt,round).replace(".", ",");
+                val.uncertaintyT = DataCalculation.round(2*unc,round).replace(".", ",");
                 
                 sheet.setValueAt(val.probeT, 5, line+17);
                 sheet.setValueAt(val.deviceT, 7, line+17);

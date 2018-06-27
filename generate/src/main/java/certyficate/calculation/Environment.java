@@ -43,10 +43,10 @@ public class Environment {
     private void _findData(double a, double b, int i){
         double correctionT = (a-range[0])/(range[1]-range[0]);
         double correctionRh = (b-range[2])/(range[3]-range[2]);
-        double     c_t= MetrologyMath.calculate(correctionT, correctionRh,
+        double     c_t= DataCalculation.calculate(correctionT, correctionRh,
         			certificateData[0].correctionT, certificateData[2].correctionT,
         			certificateData[1].correctionT, certificateData[3].correctionT),
-                c_Rh=MetrologyMath.calculate(correctionT, correctionRh,
+                c_Rh=DataCalculation.calculate(correctionT, correctionRh,
                 		certificateData[0].correctionRh, certificateData[2].correctionRh,
                 		certificateData[1].correctionRh, certificateData[3].correctionRh);
         
@@ -64,10 +64,10 @@ public class Environment {
         new_data[1]+=a;
         new_data[2]-=b;
         new_data[3]+=b;
-        new_data[0]=MetrologyMath.round_d(new_data[0], 0.1);
-        new_data[1]=MetrologyMath.round_d(new_data[1], 0.1);
-        new_data[2]=MetrologyMath.round_d(new_data[2], 0.1);
-        new_data[3]=MetrologyMath.round_d(new_data[3], 0.1);
+        new_data[0]=DataCalculation.round_d(new_data[0], 0.1);
+        new_data[1]=DataCalculation.round_d(new_data[1], 0.1);
+        new_data[2]=DataCalculation.round_d(new_data[2], 0.1);
+        new_data[3]=DataCalculation.round_d(new_data[3], 0.1);
     }
     
     void print(){

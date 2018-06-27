@@ -3,13 +3,13 @@ package certyficate.equipment;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import certyficate.calculation.Calculate;
+import certyficate.calculation.CalculateT;
 import certyficate.files.ReaderCreator;
 
 public abstract class Equipment {
 	final protected String SEPARATOR = "/t";
 	
-	public Calculate calculate;
+	public CalculateT calculate;
 	
     protected int numberOfStandardPoint;
     protected int numberOfRanges;

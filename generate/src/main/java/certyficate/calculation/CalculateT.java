@@ -2,40 +2,67 @@ package certyficate.calculation;
 
 import certyficate.dataContainer.DataProbe;
 
-public class CalculateT extends Calculate {
-
-	public DataProbe findPoint(DataProbe[] pointsInRange,
-			int[] point) {
-		super.findPoint(pointsInRange, point);
-		getCorection();
+public class CalculateT {
+	double[] factor;
+	DataProbe[] pointsInRange;
+	int[] point;
+	
+	public DataProbe findPoint(DataProbe[] pointsInRange, int[] point) {
+		this.point = point;
+		this.pointsInRange = pointsInRange;
 		return getDataPoint();
-	}
-
-	private void getCorection() {
-    	int minTemperature = pointsInRange[0].valueT;
-    	int maxTemperature = pointsInRange[point.length].valueT;
-		corection = new double[point.length];
-		corection[0] = (point[0] - minTemperature)/(maxTemperature - minTemperature);
 	}
 	
     private DataProbe getDataPoint() {
-		// TODO Auto-generated method stub
-		return null;
+    	DataProbe data  = new DataProbe(point);
+    	setData(data);
+		return data;
 	}
     
-    
+    private void setData(DataProbe data) {
+    	data.setDrift(pointsInRange[0]);
+    	calculatePatametrs(data);
+	}
 
-    
-    //Przeszukiwanie zakresów pomiarowych
-    private DataProbe find2(int[] range, int t) {
-    	DataProbe d1 = null, d2=null, sol = new DataProbe();
-        // wyliczenia dla punktu pomiarowego
-        double correctionT= (t-range[0])/(range[1]-range[0]);
-        sol.valueT=t;
-        sol.correctionT = MetrologyMath.calculate(correctionT, d1.correctionT, d2.correctionT);
-        sol.driftT = driftT;
-        sol.uncertaintyT = Math.max(d1.uncertaintyT, d2.uncertaintyT);
-        return sol;
-    }
+	private void calculatePatametrs(DataProbe data) {
+		estimateCorection(data);
+    	findUncertainty(data);		
+	}
 
+	private void estimateCorection(DataProbe data) {
+		double[] correction;
+		correction = findCorection();
+		data.correctionT = correction[0];
+		data.correctionRh = correction[1];
+	}
+
+	protected double[] findCorection() {
+		double[] correction = new double[2];
+		getFactors();
+		correction[0] = calculateTemperatureCorretion(0);
+		return correction;
+	}
+	
+	protected void getFactors() {
+    	int minTemperature = pointsInRange[0].valueT;
+    	int maxTemperature = pointsInRange[1].valueT;
+		factor = new double[point.length];
+		factor[0] = getFactor((double)point[0], minTemperature, maxTemperature);
+	}
+	
+	protected double getFactor(double point, int min, int max) {
+		return (point - min) / (max - min);
+	}
+	
+	private double calculateTemperatureCorretion(int index) {
+		double low = pointsInRange[0 + index].uncertaintyT;
+		double hight = pointsInRange[1 + index].uncertaintyT;
+		double correction = low + (hight - low) * factor[0];
+		return correction;
+	}
+
+	private void findUncertainty(DataProbe data) {
+		double[] uncertainty = DataCalculation.maxUncertainty(pointsInRange);
+		data.uncertaintyT = uncertainty[0];
+	}
 }

@@ -9,7 +9,7 @@ import java.util.Locale;
 import certyficate.dataContainer.*;
 
 //metody stowane w programie
-public class MetrologyMath {
+public class DataCalculation {
     
 	//wyliczanie odchylenia standardowego
     public static double standardDeviation(double[] data){
@@ -187,4 +187,29 @@ public class MetrologyMath {
             return 0;
           }
     }
+    
+    public static double[] maxUncertainty(DataProbe[] pointsInRange) {
+		double[] uncertainty = new double[2];
+		uncertainty[0] = maxUncertaintyT(pointsInRange);
+		uncertainty[1] = maxUncertaintyRh(pointsInRange);
+		return uncertainty;
+	}
+
+	private static double maxUncertaintyT(DataProbe[] pointsInRange) {
+		double uncertainty = 0D;
+		for(int i = 0; i < pointsInRange.length; i++) {
+			double pointUncertainty = pointsInRange[i].uncertaintyT;
+			uncertainty = Math.max(uncertainty, pointUncertainty);
+		}
+		return uncertainty;
+	}
+	
+	private static double maxUncertaintyRh(DataProbe[] pointsInRange) {
+		double uncertainty = 0D;
+		for(int i = 0; i < pointsInRange.length; i++) {
+			double pointUncertainty = pointsInRange[i].uncertaintyT;
+			uncertainty = Math.max(uncertainty, pointUncertainty);
+		}
+		return uncertainty;
+	}
 }

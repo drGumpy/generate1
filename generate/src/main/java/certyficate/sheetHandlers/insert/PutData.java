@@ -234,8 +234,8 @@ public class PutData {
         CalibrationPoint[] punkty = new CalibrationPoint[points];
         for (int i=0; i< points; i++){
             CalibrationPoint pr = new CalibrationPoint(Rh);
-            pr.time = MetrologyMath.parseTime(sheet.getValueAt(SheetData.TIME_COLUMN,6+SheetData.POINT_GAP*i).toString());
-            pr.date = MetrologyMath.parseDate(sheet.getValueAt(SheetData.DATE_COLUMN,6+SheetData.POINT_GAP*i).toString());
+            pr.time = DataCalculation.parseTime(sheet.getValueAt(SheetData.TIME_COLUMN,6+SheetData.POINT_GAP*i).toString());
+            pr.date = DataCalculation.parseDate(sheet.getValueAt(SheetData.DATE_COLUMN,6+SheetData.POINT_GAP*i).toString());
             pr.num=i;
             if(Rh){
                 pr.temp=sheet.getValueAt(0,6+SheetData.POINT_GAP*i).toString();

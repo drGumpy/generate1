@@ -2,7 +2,6 @@ package certyficate.equipment;
 
 import java.io.IOException;
 
-import certyficate.calculation.*;
 import certyficate.dataContainer.*;
 
 public class RhProbe extends ReferenceProbe {

@@ -2,11 +2,10 @@ package certyficate.equipment;
 
 import java.io.IOException;
 
-import certyficate.calculation.CalculateT;
 import certyficate.dataContainer.DataProbe;
 
 
-public class TProbe extends ReferenceProbe {
+class TProbe extends ReferenceProbe {
     public TProbe(String path) throws IOException {
 		super(path);
 	}
@@ -54,6 +53,6 @@ public class TProbe extends ReferenceProbe {
 
 	@Override
 	protected DataProbe caluculate(DataProbe[] pointsInRange, int[] point) {
-		return CalculateT.findPoint(pointsInRange, point);
+		return calculate.findPoint(pointsInRange, point);
 	}
 }
